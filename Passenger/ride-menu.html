@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rides - Chrys Ride</title>
+  <link rel="stylesheet" href="css/ride-menu.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.js"></script>
+</head>
+<body>
+  <div class="layout-wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar">
+      <ul class="nav-list">
+        <li><a href="home-menu.html"><img src="home-menu-image/home.png" alt="Home"> Home</a></li>
+        <li><a href="profile.html"><img src="home-menu-image/account.png" alt="Profile"> Profile</a></li>
+        <li><a href="ride-menu.html"><img src="home-menu-image/ride.png" alt="Rides"> Rides</a></li>
+        <li><a href="#"><img src="home-menu-image/map.png" alt="Map"> Map</a></li>
+        <li><a href="#"><img src="home-menu-image/settings.png" alt="Settings"> Settings</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <div class="main" id="main-content">
+      <header>
+        <button id="menu-toggle">☰</button>
+        <h2>Rides</h2>
+      </header>
+
+      <div class="menu-options">
+        <button class="menu-btn" onclick="location.href='ride-setup.html'">Book a Ride</button>
+        <button class="menu-btn" onclick="location.href='ride-history.html'">View Ride History</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sidebar show/hide logic
+    const sidebar = document.getElementById("sidebar");
+    const main = document.getElementById("main-content");
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+      main.classList.toggle("shifted");
+    });
+  </script>
+</body>
+</html>

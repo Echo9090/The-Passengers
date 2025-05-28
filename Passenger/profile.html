@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile - Chrys Ride</title>
+  <link rel="stylesheet" href="css/profile.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.js"></script>
+</head>
+<body>
+  <div class="layout-wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar hidden">
+      <ul class="nav-list">
+        <li><a href="home-menu.html"><img src="home-menu-image/home.png"> Home</a></li>
+        <li><a href="profile.html"><img src="home-menu-image/account.png"> Profile</a></li>
+        <li><a href="ride-menu.html"><img src="home-menu-image/ride.png"> Rides</a></li>
+        <li><a href="#"><img src="home-menu-image/map.png"> Map</a></li>
+        <li><a href="#"><img src="home-menu-image/settings.png"> Settings</a></li>
+      </ul>
+    </nav>
+    <!-- Main -->
+    <div class="main">
+      <header>
+        <button id="menu-toggle">☰</button>
+        <span class="page-title">Profile</span>
+      </header>
+      <div class="profile-section">
+        <div class="profile-picture-wrapper">
+          <img id="profile-picture" src="profile-image/profile.png" alt="Profile Picture" />
+          <div class="status-dot"></div>
+        </div>
+        <h3 id="full-name">Your Name</h3>
+        <div class="info-box">
+          <img src="profile-image/phone.png" alt="Phone Icon">
+          <div>
+            <p class="label">Phone Number</p>
+            <p id="phone-number">---------</p>
+          </div>
+        </div>
+        <div class="info-box">
+          <img src="profile-image/email.png" alt="Email Icon">
+          <div>
+            <p class="label">Email Address</p>
+            <p id="email">---------</p>
+          </div>
+        </div>
+        <button class="edit-button">Edit Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SIDEBAR LOGIC
+    const sidebar = document.getElementById("sidebar");
+    const toggle = document.getElementById("menu-toggle");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+
+    // PROFILE FETCH
+    document.addEventListener("DOMContentLoaded", async () => {
+      const supabase = window.supabase.createClient(
+        'https://klasvndqmhaioyzyedpg.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsYXN2bmRxbWhhaW95enllZHBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzODIwNjIsImV4cCI6MjA2Mzk1ODA2Mn0.IhbTIgHda9LrY7EpbqwKfYjZHRPAIwFcxOxwi1srJ4U'
+      );
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("users")
+          .select("first_name, last_name, email, phone_number, profile_picture")
+          .eq("supabase_uid", user.id)
+          .single();
+        if (profile) {
+          document.getElementById("full-name").textContent = `${profile.first_name} ${profile.last_name}`;
+          document.getElementById("phone-number").textContent = profile.phone_number || "";
+          document.getElementById("email").textContent = profile.email || "";
+          if (profile.profile_picture) {
+            document.getElementById("profile-picture").src = profile.profile_picture;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

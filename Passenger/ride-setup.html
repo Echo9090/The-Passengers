@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book Ride - Chrys Ride</title>
+  <link rel="stylesheet" href="css/ride-setup.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/umd/supabase.js"></script>
+</head>
+<body>
+  <div class="layout-wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar">
+      <ul class="nav-list">
+        <li><a href="home-menu.html"><img src="home-menu-image/home.png"> Home</a></li>
+        <li><a href="profile.html"><img src="home-menu-image/account.png"> Profile</a></li>
+        <li><a href="ride-menu.html"><img src="home-menu-image/ride.png"> Rides</a></li>
+        <li><a href="#"><img src="home-menu-image/map.png"> Map</a></li>
+        <li><a href="#"><img src="home-menu-image/settings.png"> Settings</a></li>
+      </ul>
+    </nav>
+    <!-- Main -->
+    <div class="main">
+      <header>
+        <button id="menu-toggle">☰</button>
+        <h2>Select a Vehicle</h2>
+      </header>
+      <div class="vehicle-choices">
+        <button class="vehicle-btn" data-vehicle="Van">Van</button>
+        <button class="vehicle-btn" data-vehicle="Motorcycle">Motorcycle</button>
+        <button class="vehicle-btn" data-vehicle="Tricycle">Tricycle</button>
+        <button class="vehicle-btn" data-vehicle="Jeepney">Jeepney</button>
+        <button class="vehicle-btn" data-vehicle="Bus">Bus</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Sidebar toggle
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("open");
+    });
+
+    // Make each vehicle button go to the next setup page (or pairing directly)
+    document.querySelectorAll(".vehicle-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        // In a real app, you'd probably go to a pickup/dropoff page first
+        // For now, we pass the vehicle to the next step via query string
+        const vehicle = btn.getAttribute("data-vehicle");
+        window.location.href = `ride-setup-details.html?vehicle=${encodeURIComponent(vehicle)}`;
+      });
+    });
+  </script>
+</body>
+</html>
